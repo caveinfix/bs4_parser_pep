@@ -14,7 +14,7 @@
 #### Скачать проект:
 
 ```http
-  https://github.com/caveinfix/foodgram-project-react.git
+  git@github.com:caveinfix/bs4_parser_pep.git
 ```
 
 #### Установить виртуальное окружение и зависимости:
