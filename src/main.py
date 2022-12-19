@@ -98,8 +98,8 @@ def pep(session):
         return
     soup = BeautifulSoup(response.text, features="lxml")
     section_all_pep = find_tag(
-        soup, 
-        "section", 
+        soup,
+        "section",
         attrs={"id": "numerical-index"}
     )
     all_rows_tr = section_all_pep.find_all("tr")
