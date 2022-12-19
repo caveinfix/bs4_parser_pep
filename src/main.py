@@ -21,7 +21,10 @@ def whats_new(session):
     soup = BeautifulSoup(response.text, features="lxml")
     main_div = find_tag(soup, "section", attrs={"id": "what-s-new-in-python"})
     div_with_ul = find_tag(main_div, "div", attrs={"class": "toctree-wrapper"})
-    sections_by_python = div_with_ul.find_all("li", attrs={"class": "toctree-l1"})
+    sections_by_python = div_with_ul.find_all(
+        'li',
+        attrs={'class': 'toctree-l1'}
+    )
     results = [("Ссылка на статью", "Заголовок", "Редактор, Автор")]
     for section in tqdm(sections_by_python):
         version_a_tag = section.find("a")
@@ -72,7 +75,11 @@ def download(session):
     soup = BeautifulSoup(response.text, features="lxml")
     main_tag = find_tag(soup, "div", {"role": "main"})
     table_tag = find_tag(main_tag, "table", {"class": "docutils"})
-    pdf_a4_tag = find_tag(table_tag, "a", {"href": re.compile(r".+pdf-a4\.zip$")})
+    pdf_a4_tag = find_tag(
+        table_tag,
+        'a',
+        {'href': re.compile(r'.+pdf-a4\.zip$')}
+    )
     pdf_a4_link = pdf_a4_tag["href"]
     archive_url = urljoin(downloads_url, pdf_a4_link)
     filename = archive_url.split("/")[-1]
@@ -90,7 +97,11 @@ def pep(session):
     if response is None:
         return
     soup = BeautifulSoup(response.text, features="lxml")
-    section_all_pep = find_tag(soup, "section", attrs={"id": "numerical-index"})
+    section_all_pep = find_tag(
+        soup, 
+        "section", 
+        attrs={"id": "numerical-index"}
+    )
     all_rows_tr = section_all_pep.find_all("tr")
     results = [("Статус", "Количество")]
     all_status = defaultdict(int)
