@@ -102,12 +102,13 @@ def pep(session):
         "section",
         attrs={"id": "numerical-index"}
     )
-    all_rows_tr = section_all_pep.find_all("tr")
+    version_body_tag = find_tag(section_all_pep, 'tbody')
+    all_rows_tr = version_body_tag.find_all("tr")
     results = [("Статус", "Количество")]
     all_status = defaultdict(int)
     total = 0
     for tr in tqdm(all_rows_tr):
-        version_td_tag = tr.find("td")
+        version_td_tag = find_tag(tr, "td")
         type_and_status = version_td_tag.text[1:]
         version_td_tag_next = version_td_tag.find_next_sibling("td")
         version_a_tag = find_tag(version_td_tag_next, "a")
@@ -121,7 +122,12 @@ def pep(session):
         for dt in version_dt_tag:
             if dt.text == "Status:":
                 status = dt.find_next_sibling("dd").text
-        expected_status = EXPECTED_STATUS[type_and_status]
+        try:
+            expected_status = EXPECTED_STATUS[type_and_status]
+        except KeyError:
+            logging.warning(
+                f"Статус {type_and_status} отсутствует!"
+            )
         if status not in expected_status:
             logging.info(
                 f"""
