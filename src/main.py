@@ -102,7 +102,7 @@ def pep(session):
         "section",
         attrs={"id": "numerical-index"}
     )
-    version_body_tag = find_tag(section_all_pep, 'tbody')
+    version_body_tag = find_tag(section_all_pep, "tbody")
     all_rows_tr = version_body_tag.find_all("tr")
     results = [("Статус", "Количество")]
     all_status = defaultdict(int)
